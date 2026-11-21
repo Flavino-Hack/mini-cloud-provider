@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Cloud Provider</title>
+    <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Mini Cloud Provider</h1>
+            <p class="subtitle">Infrastructure Cloud Virtualisée (Démo Portfolio)</p>
+            <button id="admin-toggle" class="btn-admin" onclick="toggleAdmin()">🔒 Passer en Mode Administrateur</button>
+        </header>
+
+        <!-- DASHBOARD ADMIN (Caché par défaut) -->
+        <section id="admin-dashboard" class="admin-panel" style="display: none;">
+            <h2>📊 Dashboard Administrateur (Hôte)</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Cœurs Hôte</h3>
+                    <p id="host-cpu">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>VPS Totaux</h3>
+                    <p id="total-vps">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>VPS Actifs</h3>
+                    <p id="running-vps">-</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="create-vps">
+            <h2>Déployer un nouveau VPS</h2>
+            <form id="create-vps-form">
+                <div class="form-group">
+                    <label for="vps-name">Nom du VPS (ex: client1, prod-web)</label>
+                    <input type="text" id="vps-name" placeholder="mon-vps" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vps-ram">Mémoire RAM</label>
+                        <select id="vps-ram">
+                            <option value="512">512 MB</option>
+                            <option value="1024" selected>1 Go</option>
+                            <option value="1536">1.5 Go</option>
+                            <option value="2048">2 Go</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vps-cpu">vCPU</label>
+                        <select id="vps-cpu">
+                            <option value="1" selected>1 vCPU</option>
+                            <option value="2">2 vCPU</option>
+                            <option value="3">3 vCPU</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="vps-storage">Stockage Persistant (Volume Docker)</label>
+                    <select id="vps-storage">
+                        <option value="1">1 GB</option>
+                        <option value="2">2 GB</option>
+                        <option value="3">3 GB</option>
+                        <option value="5" selected>5 GB (Recommandé)</option>
+                        <option value="8">8 GB</option>
+                        <option value="10">10 GB</option>
+                        <option value="15">15 GB</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vps-username">🔐 Nom d'utilisateur</label>
+                        <input type="text" id="vps-username" placeholder="admin" value="admin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vps-password">🔐 Mot de passe</label>
+                        <input type="text" id="vps-password" placeholder="MonMotDePasse123!" value="Portfolio2024!" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">⚡ Déployer le VPS</button>
+            </form>
+        </section>
+
+        <section class="vps-list">
+            <h2>VPS Déployés</h2>
+            <div id="vps-container" class="vps-grid"></div>
+            <p id="no-vps" class="empty-state">Aucun VPS déployé.</p>
+        </section>
+    </div>
+    <script src="script.js?v=4"></script>
+</body>
+</html>

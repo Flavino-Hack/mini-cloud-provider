@@ -1,0 +1,41 @@
+services:
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      # On retire le :ro qui cause parfois des soucis de permission sur Windows/WSL2
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - vps-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME:-mini-cloud-provider}_vps-network
+    networks:
+      - vps-network
+
+  frontend:
+    image: nginx:alpine
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    ports:
+      - "3000:80"
+    networks:
+      - vps-network
+
+networks:
+  vps-network:
+    driver: bridge
